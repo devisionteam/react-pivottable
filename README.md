@@ -27,6 +27,13 @@ So the sort function works like this:
 
 ## How to use
 
+Install it and follow the origin guide
+
+```
+npm install react-sort-pivottable
+```
+
+
 It's very easy to enable sort function, it provides two props to let you choose what dimension to apply：
 
 - `enableRowSort`: control row sort
