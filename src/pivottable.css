@@ -321,3 +321,31 @@ table.pvtTable tbody tr td {
 .pvtRendererArea {
     padding: 5px;
 }
+
+.sorters {
+    margin-left: 5px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.activeSorterIcon, .sorterIcon:hover {
+    color: #119dff;
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+/* to avoid icons and text are in different lines */
+.centered-sorters-box {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

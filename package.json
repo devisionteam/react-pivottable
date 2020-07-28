@@ -1,7 +1,7 @@
 {
-  "name": "react-pivottable",
+  "name": "react-sort-pivottable",
   "version": "0.10.0",
-  "description": "A React-based pivot table",
+  "description": "A React-based pivot table with sort functions",
   "main": "PivotTableUI.js",
   "files": [
     "PivotTable.js",
@@ -31,18 +31,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/plotly/react-pivottable.git"
+    "url": "git+https://github.com/JerryYuanJ/react-pivottable.git"
   },
   "keywords": [
     "react",
     "pivottable"
   ],
-  "author": "Nicolas Kruchten <nicolas@kruchten.com>",
+  "author": "Jerry",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/plotly/react-pivottable/issues"
+    "url": "https://github.com/JerryYuanJ/react-pivottable/issues"
   },
-  "homepage": "https://github.com/plotly/react-pivottable#readme",
+  "homepage": "https://github.com/JerryYuanJ/react-pivottable",
   "dependencies": {
     "immutability-helper": "^2.3.1",
     "prop-types": "^15.5.10",

@@ -611,6 +611,46 @@ class PivotData {
     };
   }
 
+  getUserSortedRowKeys(col, order) {
+    try {
+      const rowKeys = this.rowKeys;
+      const tableTree = this.tree;
+      const joiner = String.fromCharCode(0);
+      const leaderKeys = [...new Set(rowKeys.map(keys => {
+        return keys.slice(0, -1).join(joiner)
+      }))];
+
+      const results = leaderKeys.map(_ => []);
+
+      rowKeys.forEach(keys => {
+        const key = keys.join(joiner)
+        const compareKey = keys.slice(0, -1).join(joiner);
+        leaderKeys.forEach((_, index) => {
+          if (compareKey === leaderKeys[index]) {
+            results[index].push(key)
+          }
+        })
+      });
+
+      const defaultVal = { value: () => 0 }
+      results.forEach(arr => {
+        arr.sort((a, b) => {
+          const aVal = tableTree[a][col] || defaultVal
+          const bVal = tableTree[b][col] || defaultVal
+          return order === 'asc' ? aVal.value() - bVal.value() : bVal.value() - aVal.value()
+        })
+      });
+
+      return results.reduce((pre, cur) => {
+        const combined = pre.concat(cur)
+        return combined;
+      }, []).map(item => item.split(joiner));
+
+    } catch (e) {
+      return this.rowKeys
+    }
+  }
+
   sortKeys() {
     if (!this.sorted) {
       this.sorted = true;

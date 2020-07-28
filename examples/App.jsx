@@ -44,20 +44,22 @@ export default class App extends React.Component {
             filename: 'Sample Dataset: Tips',
             pivotState: {
                 data: tips,
-                rows: ['Payer Gender'],
-                cols: ['Party Size'],
-                aggregatorName: 'Sum over Sum',
+                rows: ['Payer Gender', 'Party Size'],
+                cols: ['Payer Smoker', 'Day of Week'],
+                aggregatorName: 'Sum',
                 vals: ['Tip', 'Total Bill'],
-                rendererName: 'Grouped Column Chart',
+                rendererName: 'Table',
                 sorters: {
-                    Meal: sortAs(['Lunch', 'Dinner']),
-                    'Day of Week': sortAs([
-                        'Thursday',
-                        'Friday',
-                        'Saturday',
-                        'Sunday',
-                    ]),
+                    // Meal: sortAs(['Lunch', 'Dinner']),
+                    // 'Day of Week': sortAs([
+                    //     'Thursday',
+                    //     'Friday',
+                    //     'Saturday',
+                    //     'Sunday',
+                    // ]),
                 },
+                enableRowSort: true,
+                enableColSort: false,
                 plotlyOptions: {width: 900, height: 500},
                 plotlyConfig: {},
                 tableOptions: {
