@@ -1,6 +1,6 @@
 {
   "name": "react-sort-pivottable",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "A React-based pivot table with sort functions",
   "main": "PivotTableUI.js",
   "files": [

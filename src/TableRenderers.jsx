@@ -130,7 +130,7 @@ function makeRenderer(opts = {}) {
 
       const joiner = String.fromCharCode(0);
       const getSortRowClasses = (order, key) => {
-        let classes = 'pvtTriangle sorterIcon ';
+        let classes = 'sorterIcon triangle ';
         if (order === orders.desc) {
           classes += 'rotate180 '
         }
@@ -143,7 +143,7 @@ function makeRenderer(opts = {}) {
       const getSortedColClasses = (order, key, colKey) => {
         const keyStr = colKey.join(joiner);
         const sorter = this.props.sorterCol;
-        let classes = 'pvtTriangle sorterIcon ';
+        let classes = 'sorterIcon triangle ';
         if (order === orders.desc.label) {
           classes += 'rotate180 ';
         }
@@ -216,183 +216,185 @@ function makeRenderer(opts = {}) {
           : null;
 
       return (
-        <table className="pvtTable">
-          <thead>
-            {colAttrs.map(function (c, j) {
-              return (
-                <tr key={`colAttr${j}`}>
-                  {j === 0 && rowAttrs.length !== 0 && (
-                    <th colSpan={rowAttrs.length} rowSpan={colAttrs.length} />
-                  )}
-                  <th className="pvtAxisLabel">{c}</th>
-                  {colKeys.map(function (colKey, i) {
-                    const x = spanSize(colKeys, i, j);
-                    if (x === -1) {
-                      return null;
-                    }
-                    return (
+        <div className='scroll-table-container'>
+          <table className="pvtTable">
+            <thead>
+              {colAttrs.map(function (c, j) {
+                return (
+                  <tr key={`colAttr${j}`}>
+                    {j === 0 && rowAttrs.length !== 0 && (
+                      <th colSpan={rowAttrs.length} rowSpan={colAttrs.length} />
+                    )}
+                    <th className="pvtAxisLabel">{c}</th>
+                    {colKeys.map(function (colKey, i) {
+                      const x = spanSize(colKeys, i, j);
+                      if (x === -1) {
+                        return null;
+                      }
+                      return (
+                        <th
+                          className="pvtColLabel"
+                          key={`colKey${i}`}
+                          colSpan={x}
+                          rowSpan={
+                            j === colAttrs.length - 1 && rowAttrs.length !== 0
+                              ? 2
+                              : 1
+                          }
+                        >
+                          <div className='flex-center'>
+                            {colKey[j]}
+                            {
+                              (sortCol && colKey && colKey.indexOf(colKey[j]) === colKey.length - 1) ?
+                                (<div className='sorters'>
+                                  <div className={getSortedColClasses(orders.asc.label, colKey[j], colKey)}
+                                    onClick={() => handleColClick(colKey, colKey[j], orders.asc.label)}></div>
+                                  <div className={getSortedColClasses(orders.desc.label, colKey[j], colKey)}
+                                    onClick={() => handleColClick(colKey, colKey[j], orders.desc.label)}></div>
+                                </div>) : null
+                            }
+                          </div>
+                        </th>
+                      );
+                    })}
+
+                    {j === 0 && (
                       <th
-                        className="pvtColLabel"
-                        key={`colKey${i}`}
-                        colSpan={x}
+                        className="pvtTotalLabel"
                         rowSpan={
-                          j === colAttrs.length - 1 && rowAttrs.length !== 0
-                            ? 2
-                            : 1
+                          colAttrs.length + (rowAttrs.length === 0 ? 0 : 1)
                         }
                       >
-                        <div className='flex-center'>
-                          {colKey[j]}
-                          {
-                            (sortCol && colKey && colKey.indexOf(colKey[j]) === colKey.length - 1) ?
-                              (<div className='sorters'>
-                                <div className={getSortedColClasses(orders.asc.label, colKey[j], colKey)}
-                                  onClick={() => handleColClick(colKey, colKey[j], orders.asc.label)}>▴</div>
-                                <div className={getSortedColClasses(orders.desc.label, colKey[j], colKey)}
-                                  onClick={() => handleColClick(colKey, colKey[j], orders.desc.label)}>▴</div>
-                              </div>) : null
-                          }
+                        Totals
+                      </th>
+                    )}
+                  </tr>
+                );
+              })}
+
+              {rowAttrs.length !== 0 && (
+                <tr>
+                  {rowAttrs.map(function (r, i) {
+                    return (
+                      <th className="pvtAxisLabel" key={`rowAttr${i}`}>
+                        <div className="centered-sorters-box">
+                          {r}
+                          {sortRow ? (
+                            <div className='sorters'>
+                              <div className={getSortRowClasses(orders.asc, r)}
+                                onClick={() => handleRowClick(orders.asc, r)}></div>
+                              <div className={getSortRowClasses(orders.desc, r)}
+                                onClick={() => handleRowClick(orders.desc, r)}></div>
+                            </div>
+                          ) : null}
                         </div>
                       </th>
                     );
                   })}
-
-                  {j === 0 && (
-                    <th
-                      className="pvtTotalLabel"
-                      rowSpan={
-                        colAttrs.length + (rowAttrs.length === 0 ? 0 : 1)
-                      }
-                    >
-                      Totals
-                    </th>
-                  )}
+                  <th className="pvtTotalLabel">
+                    {colAttrs.length === 0 ? 'Totals' : null}
+                  </th>
                 </tr>
-              );
-            })}
+              )}
+            </thead>
 
-            {rowAttrs.length !== 0 && (
-              <tr>
-                {rowAttrs.map(function (r, i) {
-                  return (
-                    <th className="pvtAxisLabel" key={`rowAttr${i}`}>
-                      <div className="centered-sorters-box">
-                        {r}
-                        {sortRow ? (
-                          <div className='sorters'>
-                            <div className={getSortRowClasses(orders.asc, r)}
-                              onClick={() => handleRowClick(orders.asc, r)}>▴</div>
-                            <div className={getSortRowClasses(orders.desc, r)}
-                              onClick={() => handleRowClick(orders.desc, r)}>▴</div>
-                          </div>
-                        ) : null}
-                      </div>
-                    </th>
-                  );
-                })}
-                <th className="pvtTotalLabel">
-                  {colAttrs.length === 0 ? 'Totals' : null}
-                </th>
-              </tr>
-            )}
-          </thead>
-
-          <tbody>
-            {rowKeys.map(function (rowKey, i) {
-              const totalAggregator = pivotData.getAggregator(rowKey, []);
-              return (
-                <tr key={`rowKeyRow${i}`}>
-                  {rowKey.map(function (txt, j) {
-                    const x = spanSize(rowKeys, i, j);
-                    if (x === -1) {
-                      return null;
-                    }
-                    return (
-                      <th
-                        key={`rowKeyLabel${i}-${j}`}
-                        className="pvtRowLabel"
-                        rowSpan={x}
-                        colSpan={
-                          j === rowAttrs.length - 1 && colAttrs.length !== 0
-                            ? 2
-                            : 1
-                        }
-                      >
-                        {txt}
-                      </th>
-                    );
-                  })}
-                  {colKeys.map(function (colKey, j) {
-                    const aggregator = pivotData.getAggregator(rowKey, colKey);
-                    return (
-                      <td
-                        className="pvtVal"
-                        key={`pvtVal${i}-${j}`}
-                        onClick={
-                          getClickHandler &&
-                          getClickHandler(aggregator.value(), rowKey, colKey)
-                        }
-                        style={valueCellColors(
-                          rowKey,
-                          colKey,
-                          aggregator.value()
-                        )}
-                      >
-                        {aggregator.format(aggregator.value())}
-                      </td>
-                    );
-                  })}
-                  <td
-                    className="pvtTotal"
-                    onClick={
-                      getClickHandler &&
-                      getClickHandler(totalAggregator.value(), rowKey, [null])
-                    }
-                    style={colTotalColors(totalAggregator.value())}
-                  >
-                    {totalAggregator.format(totalAggregator.value())}
-                  </td>
-                </tr>
-              );
-            })}
-
-            <tr>
-              <th
-                className="pvtTotalLabel"
-                colSpan={rowAttrs.length + (colAttrs.length === 0 ? 0 : 1)}
-              >
-                Totals
-              </th>
-
-              {colKeys.map(function (colKey, i) {
-                const totalAggregator = pivotData.getAggregator([], colKey);
+            <tbody>
+              {rowKeys.map(function (rowKey, i) {
+                const totalAggregator = pivotData.getAggregator(rowKey, []);
                 return (
-                  <td
-                    className="pvtTotal"
-                    key={`total${i}`}
-                    onClick={
-                      getClickHandler &&
-                      getClickHandler(totalAggregator.value(), [null], colKey)
-                    }
-                    style={rowTotalColors(totalAggregator.value())}
-                  >
-                    {totalAggregator.format(totalAggregator.value())}
-                  </td>
+                  <tr key={`rowKeyRow${i}`}>
+                    {rowKey.map(function (txt, j) {
+                      const x = spanSize(rowKeys, i, j);
+                      if (x === -1) {
+                        return null;
+                      }
+                      return (
+                        <th
+                          key={`rowKeyLabel${i}-${j}`}
+                          className="pvtRowLabel"
+                          rowSpan={x}
+                          colSpan={
+                            j === rowAttrs.length - 1 && colAttrs.length !== 0
+                              ? 2
+                              : 1
+                          }
+                        >
+                          {txt}
+                        </th>
+                      );
+                    })}
+                    {colKeys.map(function (colKey, j) {
+                      const aggregator = pivotData.getAggregator(rowKey, colKey);
+                      return (
+                        <td
+                          className="pvtVal"
+                          key={`pvtVal${i}-${j}`}
+                          onClick={
+                            getClickHandler &&
+                            getClickHandler(aggregator.value(), rowKey, colKey)
+                          }
+                          style={valueCellColors(
+                            rowKey,
+                            colKey,
+                            aggregator.value()
+                          )}
+                        >
+                          {aggregator.format(aggregator.value())}
+                        </td>
+                      );
+                    })}
+                    <td
+                      className="pvtTotal"
+                      onClick={
+                        getClickHandler &&
+                        getClickHandler(totalAggregator.value(), rowKey, [null])
+                      }
+                      style={colTotalColors(totalAggregator.value())}
+                    >
+                      {totalAggregator.format(totalAggregator.value())}
+                    </td>
+                  </tr>
                 );
               })}
 
-              <td
-                onClick={
-                  getClickHandler &&
-                  getClickHandler(grandTotalAggregator.value(), [null], [null])
-                }
-                className="pvtGrandTotal"
-              >
-                {grandTotalAggregator.format(grandTotalAggregator.value())}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr>
+                <th
+                  className="pvtTotalLabel"
+                  colSpan={rowAttrs.length + (colAttrs.length === 0 ? 0 : 1)}
+                >
+                  Totals
+              </th>
+
+                {colKeys.map(function (colKey, i) {
+                  const totalAggregator = pivotData.getAggregator([], colKey);
+                  return (
+                    <td
+                      className="pvtTotal"
+                      key={`total${i}`}
+                      onClick={
+                        getClickHandler &&
+                        getClickHandler(totalAggregator.value(), [null], colKey)
+                      }
+                      style={rowTotalColors(totalAggregator.value())}
+                    >
+                      {totalAggregator.format(totalAggregator.value())}
+                    </td>
+                  );
+                })}
+
+                <td
+                  onClick={
+                    getClickHandler &&
+                    getClickHandler(grandTotalAggregator.value(), [null], [null])
+                  }
+                  className="pvtGrandTotal"
+                >
+                  {grandTotalAggregator.format(grandTotalAggregator.value())}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       );
     }
   }

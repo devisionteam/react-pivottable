@@ -1,6 +1,6 @@
 import React from 'react';
 import tips from './tips';
-import {sortAs} from '../src/Utilities';
+import {stickHeader} from '../src/Utilities';
 import TableRenderers from '../src/TableRenderers';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from '../src/PlotlyRenderers';
@@ -19,6 +19,18 @@ class PivotTableUISmartWrapper extends React.PureComponent {
 
     componentWillReceiveProps(nextProps) {
         this.setState({pivotState: nextProps});
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            stickHeader()
+        }, 0);
+    }
+
+    componentDidUpdate() {
+        setTimeout(() => {
+            stickHeader()
+        }, 0);
     }
 
     render() {

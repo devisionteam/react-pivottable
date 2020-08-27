@@ -842,6 +842,21 @@ PivotData.propTypes = {
   colOrder: PropTypes.oneOf(['key_a_to_z', 'value_a_to_z', 'value_z_to_a']),
 };
 
+function stickHeader() {
+  const tables = document.querySelectorAll('table.pvtTable')
+  Array.from(tables).forEach(table => {
+    const trs = table.querySelectorAll('thead tr')
+    Array.from(trs).reduce((prev, cur) => {
+      const height = cur.getBoundingClientRect().height
+      cur.childNodes.forEach(node => {
+        // console.info(node)
+        node.setAttribute('style', `position: sticky; top: ${prev}px`)
+      })
+      return height + prev
+    }, 0)
+  })
+}
+
 export {
   aggregatorTemplates,
   aggregators,
@@ -852,4 +867,5 @@ export {
   getSort,
   sortAs,
   PivotData,
+  stickHeader
 };
