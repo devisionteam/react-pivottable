@@ -65,8 +65,8 @@ componentDidMount() {
 ![fixed header](./demos/fixed-header.gif)
 
 
-You can check examples/App,jsx to see how to use it !
+You can check `examples/App.jsx` to see how to use it !
 
-> The reason I didn't add fixed cols is that pivot table is too dynamic, sometimes the cols can be a lot and will brings the question: which part should be on top if the cols take over the whole screen width, the fixed part or the scrolled part ? If it's the fixed part, the data area wouldn't be displayed, if it's the scrolled part, the fixed part wouldn't be fixed anymore. 
+> The reason I didn't add fixed cols is that pivot table is too dynamic, sometimes the cols can be a lot and will bring the question: which part should be on top if the cols take over the whole screen width, the fixed part or the scrolled part ? If it's the fixed part, the data area wouldn't be displayed, if it's the scrolled part, the fixed part wouldn't be fixed anymore. 
 
-Bisides，this version also change the sort icon style. It used the same font （▾）as the ont in the selector but doesn't look well，so it's replaced by the new CSS icons.
+Besides，this version also change the sort icon style. It used the same font （▾）as the one in the selector but doesn't look well，so it's replaced by the new CSS icons.
