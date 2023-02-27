@@ -1,4 +1,7 @@
-# react-pivottable
+# react-pivottable-grouping-sorting
+
+This is a fork of `react-pivottable` with grouping (https://github.com/jjagielka/react-pivottable-grouping) 
+and sorting (https://github.com/JerryYuanJ/react-sort-pivottable).
 
 `react-pivottable` is a React-based pivot table library with drag'n'drop
 functionality. It is a React port of the jQuery-based
@@ -257,7 +260,7 @@ const data = function(callback) {
         "attr1": "value2_attr1",
         "attr2": "value2_attr2",
         //...
-    };
+    });
     //...
 };
 ```

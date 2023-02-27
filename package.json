@@ -1,7 +1,7 @@
 {
-  "name": "react-pivottable-grouping",
+  "name": "react-pivottable-grouping-sorting",
   "version": "0.1.0",
-  "description": "A React-based pivot table with grouping",
+  "description": "A React-based pivot table with grouping and sorting",
   "main": "PivotTableUI.js",
   "files": [
     "PivotTable.js",
@@ -28,23 +28,18 @@
     "clean": "rm -rf __tests__ PivotTable.js* PivotTableUI.js* PlotlyRenderers.js* TableRenderers.js* Utilities.js* pivottable.css grouping.css",
     "build": "npm run clean && cp src/pivottable.css . && cp src/grouping.css . && babel src --out-dir=. --source-maps --presets=env,react --plugins babel-plugin-add-module-exports",
     "doPublish": "npm run build && npm publish",
-    "postpublish": "npm run clean",
-    "deploy": "webpack -p && mv bundle.js examples && cd examples && git init && git add . && git commit -m build && git push --force git@github.com:jjagielka/react-pivottable-grouping.git master:gh-pages && rm -rf .git bundle.js"
+    "postpublish": "npm run clean"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jjagielka/react-pivottable-grouping.git"
+    "url": "https://github.com/devisionteam/react-pivottable.git"
   },
   "keywords": [
     "react",
     "pivottable"
   ],
-  "author": "Jakub Jagielka <jjagielka@gmail.com>",
+  "author": "Nicolas Kruchten <nicolas@kruchten.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jjagielka/react-pivottable-grouping/issues"
-  },
-  "homepage": "https://github.com/jjagielka/react-pivottable-grouping#readme",
   "dependencies": {
     "immutability-helper": "^2.3.1",
     "prop-types": "^15.5.10",
@@ -69,7 +64,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.3.0",
     "jest": "^21.2.1",
-    "papaparse": "^4.3.6",
+    "papaparse": "^5.3.2",
     "prettier": "^1.8.2",
     "react": ">=15.0.0",
     "react-dom": ">=15.0.0",
