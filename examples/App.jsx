@@ -1,15 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import tips from './tips';
-import {stickHeader} from '../src/Utilities';
+import {stickHeader, sortAs} from '../src/Utilities';
 import TableRenderers from '../src/TableRenderers';
 import createPlotlyComponent from 'react-plotly.js/factory';
 import createPlotlyRenderers from '../src/PlotlyRenderers';
 import PivotTableUI from '../src/PivotTableUI';
 import '../src/pivottable.css';
+import '../src/grouping.css';
 import Dropzone from 'react-dropzone';
 import Papa from 'papaparse';
 
 const Plot = createPlotlyComponent(window.Plotly);
+
+function Checkbox(props) {
+    return <label className=" checkbox-inline" style={{textTransform: "capitalize"}}>
+            <input type="checkbox"
+                // onChange={e => props.update(e, props.name)}
+                name={props.name}
+                onChange={props.onChange}
+                defaultChecked={!props.unchecked}></input> {props.name.replace( /([A-Z])/g, " $1" )}
+        </label>
+}
+
+function Grouping(props) {
+    const [disabled, setDisabled] = useState(true);
+
+    const visible = !!props.rendererName && props.rendererName.startsWith('Table');
+
+    if(!visible)
+        return <div></div>;
+
+    const onChange = e => {
+        setDisabled(!e.target.checked);
+        props.onChange(e);
+    };
+
+    return <div className="row text-center">
+        <div className="col-md-2 col-md-offset-3">
+            <Checkbox onChange={onChange} name="grouping" unchecked={true} />
+        </div>
+        <fieldset className="col-md-6" disabled={disabled}>
+            <Checkbox onChange={props.onChange} name="compactRows"/>
+            <Checkbox onChange={props.onChange} name="rowGroupBefore"/>
+            <Checkbox onChange={props.onChange} name="colGroupBefore" unchecked={true} />
+        </fieldset>
+        <br/>
+        <br/>
+    </div>
+  }
 
 class PivotTableUISmartWrapper extends React.PureComponent {
     constructor(props) {
@@ -62,13 +100,13 @@ export default class App extends React.Component {
                 vals: ['Tip', 'Total Bill'],
                 rendererName: 'Table',
                 sorters: {
-                    // Meal: sortAs(['Lunch', 'Dinner']),
-                    // 'Day of Week': sortAs([
-                    //     'Thursday',
-                    //     'Friday',
-                    //     'Saturday',
-                    //     'Sunday',
-                    // ]),
+                    Meal: sortAs(['Lunch', 'Dinner']),
+                    'Day of Week': sortAs([
+                        'Thursday',
+                        'Friday',
+                        'Saturday',
+                        'Sunday',
+                    ]),
                 },
                 enableRowSort: true,
                 enableColSort: false,
@@ -125,6 +163,12 @@ export default class App extends React.Component {
         });
     }
 
+    onGrouping({target: {name, checked}}) {
+        var pivotState = Object.assign({}, this.state.pivotState);
+        pivotState[name] = checked;
+        this.setState({pivotState});
+    }
+
     render() {
         return (
             <div>
@@ -163,7 +207,13 @@ export default class App extends React.Component {
                     <h2 className="text-center">{this.state.filename}</h2>
                     <br />
 
-                    <PivotTableUISmartWrapper {...this.state.pivotState} />
+                </div>
+                <Grouping
+                    onChange={this.onGrouping.bind(this)}
+                    rendererName={this.state.pivotState.rendererName}
+                />
+                <div className="row">
+                    <PivotTableUISmartWrapper {...this.state.pivotState} onChange={s => this.setState({pivotState: s})}/>
                 </div>
             </div>
         );
