@@ -16,5 +16,7 @@ package-lock.json
 /Utilities.js.map
 /__tests__/*
 /pivottable.css
+/grouping.css
 
 .vscode
+.idea
