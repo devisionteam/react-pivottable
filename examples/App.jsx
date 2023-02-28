@@ -3,14 +3,14 @@ import tips from './tips';
 import {stickHeader, sortAs} from '../src/Utilities';
 import TableRenderers from '../src/TableRenderers';
 import createPlotlyComponent from 'react-plotly.js/factory';
-import createPlotlyRenderers from '../src/PlotlyRenderers';
+// import createPlotlyRenderers from '../src/PlotlyRenderers';
 import PivotTableUI from '../src/PivotTableUI';
 import '../src/pivottable.css';
 import '../src/grouping.css';
 import Dropzone from 'react-dropzone';
 import Papa from 'papaparse';
 
-const Plot = createPlotlyComponent(window.Plotly);
+// const Plot = createPlotlyComponent(window.Plotly);
 
 function Checkbox(props) {
     return <label className=" checkbox-inline" style={{textTransform: "capitalize"}}>
@@ -77,7 +77,7 @@ class PivotTableUISmartWrapper extends React.PureComponent {
                 renderers={Object.assign(
                     {},
                     TableRenderers,
-                    createPlotlyRenderers(Plot)
+                    // createPlotlyRenderers(Plot)
                 )}
                 {...this.state.pivotState}
                 onChange={s => this.setState({pivotState: s})}
