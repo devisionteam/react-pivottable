@@ -7,6 +7,7 @@ import Sortable from 'react-sortablejs';
 import Draggable from 'react-draggable';
 
 /* eslint-disable react/prop-types */
+
 // eslint can't see inherited propTypes!
 
 export class DraggableAttribute extends React.Component {
@@ -429,24 +430,36 @@ class PivotTableUI extends React.PureComponent {
           }
           setValue={this.propUpdater('aggregatorName')}
         />
-        <a
-          role="button"
-          className="pvtRowOrder"
-          onClick={() =>
-            this.propUpdater('rowOrder')(sortIcons[this.props.rowOrder].next)
-          }
-        >
-          {sortIcons[this.props.rowOrder].rowSymbol}
-        </a>
-        <a
-          role="button"
-          className="pvtColOrder"
-          onClick={() =>
-            this.propUpdater('colOrder')(sortIcons[this.props.colOrder].next)
-          }
-        >
-          {sortIcons[this.props.colOrder].colSymbol}
-        </a>
+
+        {this.props.defaultSortingIcons ? (
+          <React.Fragment>
+            <a
+              role="button"
+              className="pvtRowOrder"
+              onClick={() =>
+                this.propUpdater('rowOrder')(
+                  sortIcons[this.props.rowOrder].next
+                )
+              }
+            >
+              {sortIcons[this.props.rowOrder].rowSymbol}
+            </a>
+            <a
+              role="button"
+              className="pvtColOrder"
+              onClick={() =>
+                this.propUpdater('colOrder')(
+                  sortIcons[this.props.colOrder].next
+                )
+              }
+            >
+              {sortIcons[this.props.colOrder].colSymbol}
+            </a>
+          </React.Fragment>
+        ) : (
+          ''
+        )}
+
         {numValsAllowed > 0 && <br />}
         {new Array(numValsAllowed).fill().map((n, i) => [
           <Dropdown

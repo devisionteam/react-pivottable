@@ -655,8 +655,7 @@ class PivotData {
       });
 
       return results.reduce((pre, cur) => {
-        const combined = pre.concat(cur)
-        return combined;
+        return pre.concat(cur);
       }, []).map(item => item.split(joiner));
 
     } catch (e) {
@@ -851,7 +850,8 @@ PivotData.defaultProps = {
   derivedAttributes: {},
   grouping: false,
   rowGroupBefore: true,
-  colGroupBefore: false
+  colGroupBefore: false,
+  defaultSortingIcons: false,
 };
 
 PivotData.propTypes = {
@@ -871,7 +871,8 @@ PivotData.propTypes = {
   colOrder: PropTypes.oneOf(['key_a_to_z', 'value_a_to_z', 'value_z_to_a']),
   grouping: PropTypes.bool,
   rowGroupBefore: PropTypes.bool,
-  colGroupBefore: PropTypes.bool
+  colGroupBefore: PropTypes.bool,
+  defaultSortingIcons: PropTypes.bool,
 };
 
 function stickHeader() {
